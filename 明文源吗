@@ -36,7 +36,6 @@
         'US': ['🇺🇸 美国', 'US', 'United States'],
         'SG': ['🇸🇬 新加坡', 'SG', 'Singapore'],
         'JP': ['🇯🇵 日本', 'JP', 'Japan'],
-        'HK': ['🇭🇰 香港', 'HK', 'Hong Kong'],
         'KR': ['🇰🇷 韩国', 'KR', 'South Korea'],
         'DE': ['🇩🇪 德国', 'DE', 'Germany'],
         'SE': ['🇸🇪 瑞典', 'SE', 'Sweden'],
@@ -53,7 +52,6 @@
         { domain: 'ProxyIP.US.CMLiussss.net', region: 'US', regionCode: 'US', port: 443 },
         { domain: 'ProxyIP.SG.CMLiussss.net', region: 'SG', regionCode: 'SG', port: 443 },
         { domain: 'ProxyIP.JP.CMLiussss.net', region: 'JP', regionCode: 'JP', port: 443 },
-        { domain: 'ProxyIP.HK.CMLiussss.net', region: 'HK', regionCode: 'HK', port: 443 },
         { domain: 'ProxyIP.KR.CMLiussss.net', region: 'KR', regionCode: 'KR', port: 443 },
         { domain: 'ProxyIP.DE.CMLiussss.net', region: 'DE', regionCode: 'DE', port: 443 },
         { domain: 'ProxyIP.SE.CMLiussss.net', region: 'SE', regionCode: 'SE', port: 443 },
@@ -177,9 +175,9 @@
             
             if (cfCountry) {
                 const countryToRegion = {
-                    'US': 'US', 'SG': 'SG', 'JP': 'JP', 'HK': 'HK', 'KR': 'KR',
+                    'US': 'US', 'SG': 'SG', 'JP': 'JP', 'KR': 'KR',
                     'DE': 'DE', 'SE': 'SE', 'NL': 'NL', 'FI': 'FI', 'GB': 'GB',
-                    'CN': 'HK', 'TW': 'HK', 'AU': 'SG', 'CA': 'US',
+                    'CN': 'SG', 'TW': 'JP', 'AU': 'SG', 'CA': 'US',
                     'FR': 'DE', 'IT': 'DE', 'ES': 'DE', 'CH': 'DE',
                     'AT': 'DE', 'BE': 'NL', 'DK': 'SE', 'NO': 'SE', 'IE': 'GB'
                 };
@@ -238,11 +236,10 @@
 
     function getNearbyRegions(region) {
         const nearbyMap = {
-            'US': ['SG', 'JP', 'HK', 'KR'], 
-            'SG': ['JP', 'HK', 'KR', 'US'], 
-            'JP': ['SG', 'HK', 'KR', 'US'], 
-            'HK': ['SG', 'JP', 'KR', 'US'], 
-            'KR': ['JP', 'HK', 'SG', 'US'], 
+            'US': ['SG', 'JP', 'KR'], 
+            'SG': ['JP', 'KR', 'US'], 
+            'JP': ['SG', 'KR', 'US'], 
+            'KR': ['JP', 'SG', 'US'], 
             'DE': ['NL', 'GB', 'SE', 'FI'], 
             'SE': ['DE', 'NL', 'FI', 'GB'], 
             'NL': ['DE', 'GB', 'SE', 'FI'], 
@@ -255,7 +252,7 @@
 
     function getAllRegionsByPriority(region) {
         const nearbyRegions = getNearbyRegions(region);
-        const allRegions = ['US', 'SG', 'JP', 'HK', 'KR', 'DE', 'SE', 'NL', 'FI', 'GB'];
+        const allRegions = ['US', 'SG', 'JP', 'KR', 'DE', 'SE', 'NL', 'FI', 'GB'];
         
         return [region, ...nearbyRegions, ...allRegions.filter(r => r !== region && !nearbyRegions.includes(r))];
     }
@@ -1998,7 +1995,7 @@
                     preferredControlYes: '关闭优选',
                     preferredControlHint: '设置为"关闭优选"时只使用原生地址，不生成优选IP和域名节点',
                     regionNames: {
-                        US: '🇺🇸 美国', SG: '🇸🇬 新加坡', JP: '🇯🇵 日本', HK: '🇭🇰 香港',
+                        US: '🇺🇸 美国', SG: '🇸🇬 新加坡', JP: '🇯🇵 日本',
                         KR: '🇰🇷 韩国', DE: '🇩🇪 德国', SE: '🇸🇪 瑞典', NL: '🇳🇱 荷兰',
                         FI: '🇫🇮 芬兰', GB: '🇬🇧 英国'
                     },
@@ -2129,7 +2126,7 @@
                     preferredControlYes: 'بستن ترجیح',
                     preferredControlHint: 'وقتی "بستن ترجیح" تنظیم شود، فقط از آدرس اصلی استفاده می‌شود، گره‌های IP و دامنه ترجیحی تولید نمی‌شوند',
                     regionNames: {
-                        US: '🇺🇸 آمریکا', SG: '🇸🇬 سنگاپور', JP: '🇯🇵 ژاپن', HK: '🇭🇰 هنگ‌کنگ',
+                        US: '🇺🇸 آمریکا', SG: '🇸🇬 سنگاپور', JP: '🇯🇵 ژاپن',
                         KR: '🇰🇷 کره جنوبی', DE: '🇩🇪 آلمان', SE: '🇸🇪 سوئد', NL: '🇳🇱 هلند',
                         FI: '🇫🇮 فنلاند', GB: '🇬🇧 بریتانیا'
                     },
@@ -2440,7 +2437,6 @@
                                     <option value="US">${t.regionNames.US}</option>
                                     <option value="SG">${t.regionNames.SG}</option>
                                     <option value="JP">${t.regionNames.JP}</option>
-                                    <option value="HK">${t.regionNames.HK}</option>
                                     <option value="KR">${t.regionNames.KR}</option>
                                     <option value="DE">${t.regionNames.DE}</option>
                                     <option value="SE">${t.regionNames.SE}</option>
@@ -2500,12 +2496,12 @@
                         </div>
                         <div style="margin-bottom: 15px;">
                                 <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.preferredIPs}</label>
-                                <input type="text" id="preferredIPs" placeholder="${isFarsi ? 'مثال: 1.2.3.4:443#گره هنگ‌کنگ,5.6.7.8:80#گره آمریکا,example.com:8443#گره سنگاپور' : '例如: 1.2.3.4:443#香港节点,5.6.7.8:80#美国节点,example.com:8443#新加坡节点'}" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                                <input type="text" id="yx" placeholder="${isFarsi ? 'مثال: 1.2.3.4:443#گره هنگ‌کنگ,5.6.7.8:80#گره آمریکا,example.com:8443#گره سنگاپور' : '例如: 1.2.3.4:443#日本节点,5.6.7.8:80#美国节点,example.com:8443#新加坡节点'}" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
                                 <small style="color: #00aa00; font-size: 0.85rem;">${isFarsi ? 'فرمت: IP:پورت#نام گره یا IP:پورت (بدون # از نام پیش‌فرض استفاده می‌شود). پشتیبانی از چندین مورد، با کاما جدا می‌شوند. <span style="color: #ffaa00;">IP های اضافه شده از طریق API به طور خودکار در اینجا نمایش داده می‌شوند.</span>' : '格式: IP:端口#节点名称 或 IP:端口 (无#则使用默认名称)。支持多个，用逗号分隔。<span style="color: #ffaa00;">API添加的IP会自动显示在这里。</span>'}</small>
                         </div>
                         <div style="margin-bottom: 15px;">
                                 <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.preferredIPsURL}</label>
-                                <input type="text" id="preferredIPsURL" placeholder="${isFarsi ? 'پیش‌فرض: https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt' : '默认: https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt'}" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                                <input type="text" id="yxURL" placeholder="${isFarsi ? 'پیش‌فرض: https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt' : '默认: https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt'}" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
                                 <small style="color: #00aa00; font-size: 0.85rem;">${isFarsi ? 'URL منبع لیست IP ترجیحی سفارشی، اگر خالی بگذارید از آدرس پیش‌فرض استفاده می‌شود' : '自定义优选IP列表来源URL，留空则使用默认地址'}</small>
                         </div>
                         
@@ -2527,6 +2523,10 @@
                                 <div id="randomCountDiv" style="width: 100px; display: none;">
                                     <label style="display: block; margin-bottom: 5px; color: #00ff00; font-size: 0.9rem;">${t.randomCount}</label>
                                     <input type="number" id="randomIPCount" value="20" min="1" max="100" style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.8); border: 1px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 13px;">
+                                </div>
+                                <div style="width: 80px;">
+                                    <label style="display: block; margin-bottom: 5px; color: #00ff00; font-size: 0.9rem;">${isFarsi ? 'رشته‌ها' : '线程'}</label>
+                                    <input type="number" id="testThreads" value="5" min="1" max="50" style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.8); border: 1px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 13px;">
                                 </div>
                             </div>
                             <div id="manualInputDiv" style="margin-bottom: 10px;">
@@ -2992,7 +2992,7 @@
                                 currentIP: '当前使用IP: ',
                                 regionMatch: '地区匹配: ',
                                 regionNames: {
-                        'US': '🇺🇸 美国', 'SG': '🇸🇬 新加坡', 'JP': '🇯🇵 日本', 'HK': '🇭🇰 香港',
+                        'US': '🇺🇸 美国', 'SG': '🇸🇬 新加坡', 'JP': '🇯🇵 日本',
                         'KR': '🇰🇷 韩国', 'DE': '🇩🇪 德国', 'SE': '🇸🇪 瑞典', 'NL': '🇳🇱 荷兰',
                         'FI': '🇫🇮 芬兰', 'GB': '🇬🇧 英国'
                                 },
@@ -3017,7 +3017,7 @@
                                 currentIP: 'IP فعلی: ',
                                 regionMatch: 'تطبیق منطقه: ',
                                 regionNames: {
-                                    'US': '🇺🇸 آمریکا', 'SG': '🇸🇬 سنگاپور', 'JP': '🇯🇵 ژاپن', 'HK': '🇭🇰 هنگ‌کنگ',
+                                    'US': '🇺🇸 آمریکا', 'SG': '🇸🇬 سنگاپور', 'JP': '🇯🇵 ژاپن',
                                     'KR': '🇰🇷 کره جنوبی', 'DE': '🇩🇪 آلمان', 'SE': '🇸🇪 سوئد', 'NL': '🇳🇱 هلند',
                                     'FI': '🇫🇮 فنلاند', 'GB': '🇬🇧 بریتانیا'
                                 },
@@ -3390,8 +3390,8 @@
                     if (document.getElementById('ispTelecom')) document.getElementById('ispTelecom').checked = config.ispTelecom !== 'no';
                     document.getElementById('customPath').value = config.d || '';
                     document.getElementById('customIP').value = config.p || '';
-                    document.getElementById('preferredIPs').value = config.yx || '';
-                    document.getElementById('preferredIPsURL').value = config.yxURL || '';
+                    document.getElementById('yx').value = config.yx || '';
+                    document.getElementById('yxURL').value = config.yxURL || '';
                     document.getElementById('socksConfig').value = config.s || '';
                     document.getElementById('customHomepage').value = config.homepage || '';
                     document.getElementById('apiEnabled').value = config.ae || '';
@@ -3636,8 +3636,8 @@
                         const configData = { ev: document.getElementById('ev').checked ? 'yes' : 'no', et: document.getElementById('et').checked ? 'yes' : 'no', ex: document.getElementById('ex').checked ? 'yes' : 'no', tp: document.getElementById('tp').value,
                             d: document.getElementById('customPath').value,
                             p: document.getElementById('customIP').value,
-                            yx: document.getElementById('preferredIPs').value,
-                            yxURL: document.getElementById('preferredIPsURL').value,
+                            yx: document.getElementById('yx').value,
+                            yxURL: document.getElementById('yxURL').value,
                             s: document.getElementById('socksConfig').value,
                             homepage: document.getElementById('customHomepage').value
                         };
@@ -3691,6 +3691,10 @@
                 const fetchURLInput = document.getElementById('fetchURLInput');
                 const latencyTestPort = document.getElementById('latencyTestPort');
                 const randomIPCount = document.getElementById('randomIPCount');
+                const cfRandomDiv = document.getElementById('cfRandomDiv');
+                const randomCountDiv = document.getElementById('randomCountDiv');
+                const generateCFIPBtn = document.getElementById('generateCFIPBtn');
+                const fetchIPBtn = document.getElementById('fetchIPBtn');
                 
                 if (latencyTestInput) {
                     const savedTestInput = localStorage.getItem('latencyTestInput');
@@ -3720,6 +3724,14 @@
                         localStorage.setItem('randomIPCount', this.value);
                     });
                 }
+                const testThreadsInput = document.getElementById('testThreads');
+                if (testThreadsInput) {
+                    const savedThreads = localStorage.getItem('testThreads');
+                    if (savedThreads) testThreadsInput.value = savedThreads;
+                    testThreadsInput.addEventListener('input', function() {
+                        localStorage.setItem('testThreads', this.value);
+                    });
+                }
                 if (ipSourceSelect) {
                     const savedSource = localStorage.getItem('ipSourceSelect');
                     if (savedSource) {
@@ -3730,10 +3742,6 @@
                         randomCountDiv.style.display = savedSource === 'cfRandom' ? 'block' : 'none';
                     }
                 }
-                const cfRandomDiv = document.getElementById('cfRandomDiv');
-                const randomCountDiv = document.getElementById('randomCountDiv');
-                const generateCFIPBtn = document.getElementById('generateCFIPBtn');
-                const fetchIPBtn = document.getElementById('fetchIPBtn');
                 
                 const CF_CIDR_LIST = [
                     '173.245.48.0/20', '103.21.244.0/22', '103.22.200.0/22', '103.31.4.0/22',
@@ -3824,11 +3832,13 @@
                     startTestBtn.addEventListener('click', async function() {
                         const inputField = document.getElementById('latencyTestInput');
                         const portField = document.getElementById('latencyTestPort');
+                        const threadsField = document.getElementById('testThreads');
                         const inputValue = inputField.value.trim();
                         const defaultPort = portField.value || '443';
+                        const threads = parseInt(threadsField.value) || 5;
                         
                         if (!inputValue) {
-                            alert('${isFarsi ? 'لطفا IP یا دامنه وارد کنید' : '请输入IP或域名'}');
+                            showStatus('${isFarsi ? 'لطفا IP یا دامنه وارد کنید' : '请输入IP或域名'}', 'error');
                             return;
                         }
                         
@@ -3847,11 +3857,7 @@
                         let completed = 0;
                         const total = targets.length;
                         
-                        for (const target of targets) {
-                            if (testAbortController.signal.aborted) break;
-                            
-                            testStatus.textContent = '${isFarsi ? 'در حال تست' : '测试中'}: ' + (completed + 1) + '/' + total + ' - ' + target;
-                            
+                        function parseTarget(target) {
                             let host = target;
                             let port = defaultPort;
                             let nodeName = '';
@@ -3874,17 +3880,10 @@
                                 host = parts[0] + ']';
                                 port = parts[1];
                             }
-                            
-                            const result = await testLatency(host, port, testAbortController.signal);
-                            result.host = host;
-                            result.port = port;
-                            if (result.success && result.colo) {
-                                result.nodeName = nodeName || ('CF-' + result.colo);
-                            } else {
-                                result.nodeName = nodeName || host;
-                            }
-                            testResults.push(result);
-                            
+                            return { host, port, nodeName };
+                        }
+                        
+                        function renderResult(result, index) {
                             const resultItem = document.createElement('div');
                             resultItem.style.cssText = 'display: flex; align-items: center; padding: 8px; border-bottom: 1px solid #003300; gap: 10px;';
                             
@@ -3892,7 +3891,7 @@
                             checkbox.type = 'checkbox';
                             checkbox.checked = result.success;
                             checkbox.disabled = !result.success;
-                            checkbox.dataset.index = testResults.length - 1;
+                            checkbox.dataset.index = index;
                             checkbox.style.cssText = 'width: 18px; height: 18px; cursor: pointer;';
                             
                             const info = document.createElement('div');
@@ -3901,18 +3900,44 @@
                             if (result.success) {
                                 const coloName = result.colo ? getColoName(result.colo) : '';
                                 const coloDisplay = coloName ? ' <span style="color: #00aaff;">[' + coloName + ']</span>' : '';
-                                info.innerHTML = '<span style="color: #00ff00;">' + host + ':' + port + '</span>' + coloDisplay + ' <span style="color: #ffff00;">' + result.latency + 'ms</span>';
+                                info.innerHTML = '<span style="color: #00ff00;">' + result.host + ':' + result.port + '</span>' + coloDisplay + ' <span style="color: #ffff00;">' + result.latency + 'ms</span>';
                             } else {
                                 const errorDetail = result.error || '${isFarsi ? 'زمان تمام شد' : '超时'}';
                                 const testUrlDisplay = result.testUrl ? '<br><span style="color: #888; font-size: 11px;">URL: ' + result.testUrl + '</span>' : '';
-                                info.innerHTML = '<span style="color: #ff4444;">' + host + ':' + port + '</span> <span style="color: #ff6666; font-size: 12px;">' + errorDetail + '</span>' + testUrlDisplay;
+                                info.innerHTML = '<span style="color: #ff4444;">' + result.host + ':' + result.port + '</span> <span style="color: #ff6666; font-size: 12px;">' + errorDetail + '</span>' + testUrlDisplay;
                             }
                             
                             resultItem.appendChild(checkbox);
                             resultItem.appendChild(info);
                             resultsList.appendChild(resultItem);
+                        }
+                        
+                        async function testOne(target) {
+                            if (testAbortController.signal.aborted) return null;
+                            const { host, port, nodeName } = parseTarget(target);
+                            const result = await testLatency(host, port, testAbortController.signal);
+                            result.host = host;
+                            result.port = port;
+                            result.nodeName = (result.success && result.colo) ? (nodeName || ('CF-' + result.colo)) : (nodeName || host);
+                            return result;
+                        }
+                        
+                        for (let i = 0; i < total; i += threads) {
+                            if (testAbortController.signal.aborted) break;
                             
-                            completed++;
+                            const batch = targets.slice(i, Math.min(i + threads, total));
+                            testStatus.textContent = '${isFarsi ? 'در حال تست' : '测试中'}: ' + (i + 1) + '-' + Math.min(i + threads, total) + '/' + total + ' (${isFarsi ? 'رشته‌ها' : '线程'}: ' + threads + ')';
+                            
+                            const results = await Promise.all(batch.map(t => testOne(t)));
+                            
+                            for (const result of results) {
+                                if (result) {
+                                    const idx = testResults.length;
+                                    testResults.push(result);
+                                    renderResult(result, idx);
+                                    completed++;
+                                }
+                            }
                         }
                         
                         testStatus.textContent = '${isFarsi ? 'تست کامل شد' : '测试完成'}: ' + completed + '/' + total;
@@ -3966,10 +3991,9 @@
                         });
                         
                         if (selectedItems.length > 0) {
-                            const preferredIPsInput = document.getElementById('preferredIPs');
-                            const currentValue = preferredIPsInput.value.trim();
-                            const newValue = currentValue ? currentValue + ',' + selectedItems.join(',') : selectedItems.join(',');
-                            preferredIPsInput.value = newValue;
+                            const yxInput = document.getElementById('yx');
+                            const newValue = selectedItems.join(',');
+                            yxInput.value = newValue;
                             
                             addSelectedBtn.disabled = true;
                             addSelectedBtn.textContent = '${isFarsi ? 'در حال ذخیره...' : '保存中...'}';
@@ -3977,12 +4001,12 @@
                             try {
                                 const configData = {
                                     customIP: document.getElementById('customIP').value,
-                                    preferredIPs: newValue,
-                                    preferredIPsURL: document.getElementById('preferredIPsURL').value,
+                                    yx: newValue,
+                                    yxURL: document.getElementById('yxURL').value,
                                     socksConfig: document.getElementById('socksConfig').value
                                 };
                                 await saveConfig(configData);
-                                showStatus('${isFarsi ? 'موفقیت‌آمیز بود' : '已添加'} ' + selectedItems.length + ' ${isFarsi ? 'مورد و ذخیره شد' : '项并已保存'}', 'success');
+                                showStatus('${isFarsi ? 'موفقیت‌آمیز بود' : '已替换'} ' + selectedItems.length + ' ${isFarsi ? 'مورد و ذخیره شد' : '项并已保存'}', 'success');
                             } catch (err) {
                                 showStatus('${isFarsi ? 'خطا در ذخیره' : '保存失败'}: ' + err.message, 'error');
                             } finally {
@@ -4941,7 +4965,6 @@
                         { domain: 'ProxyIP.US.CMLiussss.net', region: 'US', regionCode: 'US', port: 443 },
                         { domain: 'ProxyIP.SG.CMLiussss.net', region: 'SG', regionCode: 'SG', port: 443 },
                         { domain: 'ProxyIP.JP.CMLiussss.net', region: 'JP', regionCode: 'JP', port: 443 },
-                        { domain: 'ProxyIP.HK.CMLiussss.net', region: 'HK', regionCode: 'HK', port: 443 },
                         { domain: 'ProxyIP.KR.CMLiussss.net', region: 'KR', regionCode: 'KR', port: 443 },
                         { domain: 'ProxyIP.DE.CMLiussss.net', region: 'DE', regionCode: 'DE', port: 443 },
                         { domain: 'ProxyIP.SE.CMLiussss.net', region: 'SE', regionCode: 'SE', port: 443 },
