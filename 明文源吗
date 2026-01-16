@@ -2594,7 +2594,6 @@
                         <div id="backupStatus" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">${t.proxyIPStatus}${t.checking}</div>
                         <div id="currentIP" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">${t.currentIP}${t.checking}</div>
                         <div id="echStatus" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00; font-size: 0.9rem;">ECH状态: ${t.checking}</div>
-                        <div id="echDebug" style="margin: 8px 0; padding: 8px; background: rgba(0, 20, 0, 0.6); border: 1px solid #00aa00; border-radius: 4px; color: #00aa00; font-family: 'Courier New', monospace; font-size: 0.8rem; display: none; white-space: pre-wrap; max-height: 200px; overflow-y: auto;"></div>
                         <div id="regionMatch" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">${t.regionMatch}${t.checking}</div>
                         <div id="selectionLogic" style="margin: 8px 0; color: #00aa00; font-family: 'Courier New', monospace; font-size: 0.9rem; text-shadow: 0 0 3px #00aa00;">${t.selectionLogic}${t.selectionLogicText}</div>
                 </div>
@@ -3788,7 +3787,6 @@
             
             async function checkECHStatus() {
                 const echStatusEl = document.getElementById('echStatus');
-                const echDebugEl = document.getElementById('echDebug');
                 
                 if (!echStatusEl) return;
                 
@@ -3805,34 +3803,18 @@
                         }
                     });
                     
-                    const echDebugHeader = response.headers.get('X-ECH-Debug');
                     const echStatusHeader = response.headers.get('X-ECH-Status');
                     const echConfigLength = response.headers.get('X-ECH-Config-Length');
                     
                     if (echStatusHeader === 'SUCCESS') {
                         echStatusEl.innerHTML = 'ECH状态: <span style="color: #44ff44;">✅ 已启用 (配置长度: ' + (echConfigLength || 'N/A') + ')</span>';
-                        if (echDebugEl && echDebugHeader) {
-                            echDebugEl.style.display = 'block';
-                            echDebugEl.textContent = 'ECH调试信息:\\n' + echDebugHeader.replace(/\s*\|\s*/g, '\\n');
-                        }
                     } else if (echStatusHeader === 'FAILED') {
                         echStatusEl.innerHTML = 'ECH状态: <span style="color: #ff4444;">❌ 获取失败</span>';
-                        if (echDebugEl && echDebugHeader) {
-                            echDebugEl.style.display = 'block';
-                            echDebugEl.textContent = 'ECH调试信息:\\n' + echDebugHeader.replace(/\s*\|\s*/g, '\\n');
-                        }
                     } else {
                         echStatusEl.innerHTML = 'ECH状态: <span style="color: #ffaa00;">⚠️ 未启用或未检测到</span>';
-                        if (echDebugEl) {
-                            echDebugEl.style.display = 'none';
-                        }
                     }
                 } catch (error) {
                     echStatusEl.innerHTML = 'ECH状态: <span style="color: #ff4444;">❌ 检测失败: ' + error.message + '</span>';
-                    if (echDebugEl) {
-                        echDebugEl.style.display = 'block';
-                        echDebugEl.textContent = '错误: ' + error.message;
-                    }
                 }
             }
             
