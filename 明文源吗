@@ -1340,8 +1340,8 @@
                 // 处理单行格式的节点：  - {name: ..., server: ..., ...}
                 // 需要正确处理嵌套的花括号（如 ws-opts: {path: "...", headers: {Host: ...}}）
                 clashConfig = clashConfig.split('\n').map(line => {
-                    // 检查是否是节点行（以 "  - {" 开头）
-                    if (/^\s*-\s*\{/.test(line)) {
+                    // 检查是否是节点行（以 "  - {" 开头，且包含 name: 和 server:）
+                    if (/^\s*-\s*\{/.test(line) && line.includes('name:') && line.includes('server:')) {
                         // 检查是否已经有 ech-opts
                         if (line.includes('ech-opts')) {
                             return line; // 已有 ech-opts，不修改
@@ -1349,31 +1349,22 @@
                         // 找到最后一个 } 的位置（从右往左查找，处理嵌套花括号）
                         const lastBraceIndex = line.lastIndexOf('}');
                         if (lastBraceIndex > 0) {
-                            // 在最后一个 } 之前添加 , ech-opts: {enable: true}
-                            return line.substring(0, lastBraceIndex) + ', ech-opts: {enable: true}' + line.substring(lastBraceIndex);
+                            // 检查最后一个 } 之前是否有内容，确保格式正确
+                            const beforeBrace = line.substring(0, lastBraceIndex).trim();
+                            if (beforeBrace.length > 0) {
+                                // 在最后一个 } 之前添加 , ech-opts: {enable: true}
+                                // 确保在逗号前有空格
+                                const needsComma = !beforeBrace.endsWith(',') && !beforeBrace.endsWith('{');
+                                return line.substring(0, lastBraceIndex) + (needsComma ? ', ' : ' ') + 'ech-opts: {enable: true}' + line.substring(lastBraceIndex);
+                            }
                         }
                     }
                     return line;
                 }).join('\n');
                 
                 // 处理多行格式的节点（如果存在）
-                // 匹配格式：
-                //   - name: ...
-                //     server: ...
-                //     type: ...
-                //     ...
-                clashConfig = clashConfig.replace(/^(\s*-\s*name:[^\n]*(?:\n\s+[^\n-]+)*)/gm, (match) => {
-                    // 检查是否已经有 ech-opts
-                    if (match.includes('ech-opts')) {
-                        return match; // 已有 ech-opts，不修改
-                    }
-                    // 获取缩进级别（通常是 2 或 4 个空格）
-                    const indentMatch = match.match(/^(\s*)/);
-                    const baseIndent = indentMatch ? indentMatch[1] : '    ';
-                    const propIndent = baseIndent + '  ';
-                    // 在节点末尾添加 ech-opts
-                    return match + '\n' + baseIndent + 'ech-opts:\n' + propIndent + 'enable: true';
-                });
+                // 只处理单行格式，多行格式由订阅转换服务处理，不需要额外修改
+                // 如果订阅转换服务返回多行格式，通常已经是正确的格式
             }
             
             // 替换 DNS nameserver 为阿里的加密 DNS
